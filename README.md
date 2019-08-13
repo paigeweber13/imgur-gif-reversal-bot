@@ -18,3 +18,9 @@ data[0].images[0].is_ad
 data[0].images[0].has_sound
 data[0].images[0].mp4
 data[0].images[0].gifv
+
+## Extra info from get authorization response
+expires_in=315360000
+token_type=bearer
+account_username=GifReversalBot
+account_id=112569647
