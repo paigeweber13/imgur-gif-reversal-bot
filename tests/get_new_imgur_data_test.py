@@ -5,7 +5,13 @@ import context
 
 def main():
     interface = context.ii.ImgurInterface()
-    interface.refresh_access_token()
+
+    print('configuring authorization')
+    if(interface.is_access_token_refresh_needed()):
+        print('refreshing access token...')
+        interface.refresh_access_token()
+    else:
+        print('no need to refresh access token!')
 
 if __name__ == '__main__':
     main()

@@ -4,6 +4,8 @@ import os
 import requests
 import sys
 
+from datetime import datetime
+
 class ImgurInterface:
     def __init__(self):
         self.auth_filename = os.path.abspath(os.path.join(os.path.dirname(__file__), 'auth.json'))
@@ -18,6 +20,18 @@ class ImgurInterface:
     def set_all_key_in_json(self):
         with open(self.auth_filename, 'w') as f:
             json.dump(self.keys, f)
+
+    def is_access_token_refresh_needed(self):
+        if self.keys['access_token'] == '':
+            return True
+        time_since_last_modification = datetime.timestamp(
+            datetime.now()) - os.path.getmtime(self.auth_filename)
+        # currently, limit is 28 days (minimum month length) because
+        # imgur access_tokens expire after a month
+        limit_in_ms = 28*24*60*60*1000
+        if time_since_last_modification > limit_in_ms:
+            return True
+        return False
 
     def refresh_access_token(self):
         access_token_url = 'https://api.imgur.com/oauth2/token'
@@ -38,7 +52,9 @@ class ImgurInterface:
     def get_rising_gifs(self):
         rising_gallery_url = 'https://api.imgur.com/3/gallery/user/rising/day/1?album_previews=true'
         headers = {
-            'accessToken': ''
+            'accessToken': self.keys['access_token'],
         }
-        # r = requests.get(rising_gallery_url, 
+        r = requests.get(rising_gallery_url, headers=headers)
+        print(r)
+        print(r.text)
 
