@@ -24,3 +24,17 @@ expires_in=315360000
 token_type=bearer
 account_username=GifReversalBot
 account_id=112569647
+
+## File formats I'll have to deal with:
+video/mp4
+image/gif
+
+less common formats I may want to add?
+video/webm
+video/x-matroska
+video/quicktime
+video/x-flv
+video/x-msvideo
+video/x-ms-wmv
+video/mpeg
+

@@ -52,10 +52,16 @@ class ImgurInterface:
         self.set_all_key_in_json()
         
     def get_rising_gifs(self):
-        rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/1?album_previews=true'
-        headers = {
-            'Authorization': 'Client-ID ' + self.keys['clientId'],
-        }
-        r = requests.get(rising_gallery_url, headers=headers)
-        return r.text
+        num_pages_to_get = 1
+        responses = []
+        for i in range(0, num_pages_to_get):
+            # i is incremented because imgur starts with page 1
+            i+=1
+            rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/' + str(i) + '?album_previews=true'
+            headers = {
+                'Authorization': 'Client-ID ' + self.keys['clientId'],
+            }
+            r = requests.get(rising_gallery_url, headers=headers)
+            responses.append(json.loads(r.text))
+        return responses
 
