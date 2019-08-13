@@ -12,6 +12,10 @@ def main():
         interface.refresh_access_token()
     else:
         print('no need to refresh access token!')
+    
+    print('getting rising gifs')
+    rising_gifs = interface.get_rising_gifs()
+    print(rising_gifs)
 
 if __name__ == '__main__':
     main()

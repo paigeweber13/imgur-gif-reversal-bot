@@ -6,6 +6,8 @@ import sys
 
 from datetime import datetime
 
+API_ROOT = 'https://api.imgur.com/'
+
 class ImgurInterface:
     def __init__(self):
         self.auth_filename = os.path.abspath(os.path.join(os.path.dirname(__file__), 'auth.json'))
@@ -22,7 +24,7 @@ class ImgurInterface:
             json.dump(self.keys, f)
 
     def is_access_token_refresh_needed(self):
-        if self.keys['access_token'] == '':
+        if self.keys['accessToken'] == '':
             return True
         time_since_last_modification = datetime.timestamp(
             datetime.now()) - os.path.getmtime(self.auth_filename)
@@ -34,7 +36,7 @@ class ImgurInterface:
         return False
 
     def refresh_access_token(self):
-        access_token_url = 'https://api.imgur.com/oauth2/token'
+        access_token_url = API_ROOT + 'oauth2/token'
         request_body = {
             'refresh_token': self.keys['refreshToken'],
             'client_id': self.keys['clientId'],
@@ -50,11 +52,10 @@ class ImgurInterface:
         self.set_all_key_in_json()
         
     def get_rising_gifs(self):
-        rising_gallery_url = 'https://api.imgur.com/3/gallery/user/rising/day/1?album_previews=true'
+        rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/1?album_previews=true'
         headers = {
-            'accessToken': self.keys['access_token'],
+            'Authorization': 'Client-ID ' + self.keys['clientId'],
         }
         r = requests.get(rising_gallery_url, headers=headers)
-        print(r)
-        print(r.text)
+        return r.text
 
