@@ -1,4 +1,9 @@
 # Notes
+## Authorization
+### Resources:
+https://api.imgur.com/oauth2
+https://apidocs.imgur.com/?version=latest#register-an-application-important
+
 ## Imgur API
 ### Getting rising usersub
 GET https://api.imgur.com/3/gallery/user/rising/day/1?album_previews=true
