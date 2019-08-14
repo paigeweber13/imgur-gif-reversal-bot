@@ -50,18 +50,32 @@ class ImgurInterface:
         # in for now in case I'm wrong
         # self.keys['refresh_token'] = response_json['refresh_token']
         self.set_all_key_in_json()
-        
+    
+    def image_is_gif(self, image_metadata):
+        return image_metadata['type'][:9] == 'image/gif' or \
+            image_metadata['type'][:5] == 'video'
+    
+    def filter_gifs_from_gallery_response(self, response):
+        for post in response['data']:
+            if 'images' in post:
+                post['images'] = filter(self.image_is_gif, post['images'])
+        return response
+
     def get_rising_gifs(self):
         num_pages_to_get = 1
         responses = []
         for i in range(0, num_pages_to_get):
             # i is incremented because imgur starts with page 1
             i+=1
+
             rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/' + str(i) + '?album_previews=true'
             headers = {
                 'Authorization': 'Client-ID ' + self.keys['clientId'],
             }
             r = requests.get(rising_gallery_url, headers=headers)
-            responses.append(json.loads(r.text))
+
+            response = json.loads(r.text)
+            response = self.filter_gifs_from_gallery_response(response)
+            responses.append(response)
         return responses
 
