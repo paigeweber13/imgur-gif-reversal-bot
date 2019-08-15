@@ -31,9 +31,16 @@ class TestImgurInterface(unittest.TestCase):
             self.assertEqual(TestImgurInterface.sample_rising_gallery_response['data'][i],
                             self.sample_rising_gallery_response['data'][i])
 
+        should_be_gif_self = self.sample_rising_gallery_response['data'][13]
+        should_be_gif = TestImgurInterface.sample_rising_gallery_response['data'][7]
+        # this line fails
+        self.assertEqual(should_be_gif, should_be_gif_self)
+
     def test_image_is_gif(self):
         should_be_gif_self = self.sample_rising_gallery_response['data'][13]
         should_be_gif = TestImgurInterface.sample_rising_gallery_response['data'][7]
+        # this line passes
+        self.assertEqual(should_be_gif, should_be_gif_self)
         # line 1368 in rising-gallery.json
         # checking title just as a sanity check: is this the post we actually
         # want to test? 
