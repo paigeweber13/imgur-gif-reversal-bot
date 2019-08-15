@@ -9,7 +9,8 @@ succeed.
 """
 
 # from context import imgur_interface
-import context
+# import context
+from context import ii
 import os
 import json
 
@@ -40,7 +41,7 @@ def print_stuff_from_rising_respose(rising_response):
             # print()
 
 def main():
-    interface = context.ii.ImgurInterface()
+    interface = ii.ImgurInterface()
 
     print('configuring authorization')
     if(interface.is_access_token_refresh_needed()):

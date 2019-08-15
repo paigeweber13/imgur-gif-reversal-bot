@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 
-from .context import reverse_gifs
+from .context import ii
 
 import os
 import json
@@ -19,10 +19,10 @@ class TestImgurInterface(unittest.TestCase):
         filename = TestImgurInterface.SAMPLE_RISING_GALLERY_RESPONSE_FILENAME
         with open(filename, 'r') as f:
             self.sample_rising_gallery_response = json.load(f)
+        self.interface = ii.ImgurInterface()
 
 
     def test_image_is_gif(self):
-        print(self.sample_rising_gallery_response)
         assert True
 
     def test_filter_gifs(self):
