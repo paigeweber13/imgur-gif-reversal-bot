@@ -43,6 +43,7 @@ def print_stuff_from_rising_respose(rising_response):
 def main():
     interface = ii.ImgurInterface()
 
+    # print('keys:', json.dumps(interface.keys, indent=2, sort_keys=True))
     print('configuring authorization')
     if(interface.is_access_token_refresh_needed()):
         print('refreshing access token...')
