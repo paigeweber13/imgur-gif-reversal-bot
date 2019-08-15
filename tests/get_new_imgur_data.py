@@ -1,7 +1,22 @@
 # -*- coding: utf-8 -*-
+"""
+the purpose of this file is to test the network parts of this application,
+which is basically just configuring authorization and then getting data from
+imgur. This data is dumped to disk for manual examination.
+
+Not automated because no one wants to depend on network for automated tests to
+succeed.
+"""
 
 # from context import imgur_interface
 import context
+import os
+import json
+
+RESPONSE_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), 
+                 'new-data')
+    )
 
 def print_stuff_from_rising_respose(rising_response):
     for page in rising_response:
@@ -36,7 +51,10 @@ def main():
     
     print('getting rising gifs')
     rising_gifs = interface.get_rising_gifs()
-    print_stuff_from_rising_respose(rising_gifs)
+    filename = RESPONSE_DIR + '/rising-gifs-response.json'
+    with open(filename, 'w') as f:
+        json.dump(rising_gifs, f)
+        print('response output to ' + filename + ' for manual examination')
 
 if __name__ == '__main__':
     main()
