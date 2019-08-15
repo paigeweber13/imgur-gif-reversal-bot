@@ -45,7 +45,7 @@ class ImgurInterface:
         }
         r = requests.post(access_token_url, json=request_body)
         response_json = json.loads(r.text)
-        self.keys['access_token'] = response_json['access_token']
+        self.keys['accessToken'] = response_json['access_token']
         # pretty sure we don't have to update this..... but leaving a comment
         # in for now in case I'm wrong
         # self.keys['refresh_token'] = response_json['refresh_token']
