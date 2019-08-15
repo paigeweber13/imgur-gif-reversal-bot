@@ -37,6 +37,11 @@ class TestImgurInterface(unittest.TestCase):
 
     def test_filter_gifs(self):
         filtered = TestImgurInterface.interface.filter_gifs_from_gallery_response(TestImgurInterface.sample_rising_gallery_response)
+        for post in filtered['data']:
+            if 'images' in post:
+                for image in post['images']:
+                    print(image)
+                    self.assertTrue(TestImgurInterface.interface.image_is_gif(image))
         assert True
 
 
