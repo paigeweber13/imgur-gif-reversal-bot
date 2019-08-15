@@ -37,10 +37,6 @@ class TestImgurInterface(unittest.TestCase):
         self.assertTrue(TestImgurInterface.interface.image_is_gif(
                             should_be_video['images'][0]))
 
-    def test_filter_gifs(self):
-        filtered = TestImgurInterface.interface.filter_gifs_from_gallery_response(self.sample_rising_gallery_response)
-        assert True
-
 
 if __name__ == '__main__':
     unittest.main()
