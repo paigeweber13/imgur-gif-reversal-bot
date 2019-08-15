@@ -58,7 +58,13 @@ class ImgurInterface:
     def filter_gifs_from_gallery_response(self, response):
         for post in response['data']:
             if 'images' in post:
-                post['images'] = filter(self.image_is_gif, post['images'])
+                # post['images'] = list(filter(self.image_is_gif,
+                # post['images']))
+                # print('before', post['images'])
+                post['images'] = [image for image in post['images'] if self.image_is_gif(image)]
+                if len(post['images']) == 0:
+                    response['data'].remove(post)
+                # print('after', post['images'])
         return response
 
     def get_rising_gifs(self):
