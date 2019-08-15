@@ -24,18 +24,23 @@ class TestImgurInterface(unittest.TestCase):
     def test_image_is_gif(self):
         should_be_gif = self.sample_rising_gallery_response['data'][13]
         # line 1368 in rising-gallery.json
+        # checking title just as a sanity check: is this the post we actually
+        # want to test? 
         self.assertEqual(should_be_gif['title'], 'Hungry Squirrel')
-        self.assertEqual(should_be_gif['images'][0]['type'], 'image/gif')
+        self.assertTrue(self.interface.image_is_gif(
+                            should_be_gif['images'][0]))
         assert True
 
     def test_image_is_video(self):
         should_be_video = self.sample_rising_gallery_response['data'][22]
         # line 2373 in rising-gallery.json
         self.assertEqual(should_be_video['title'], 'Holy Shit')
-        self.assertEqual(should_be_video['images'][0]['type'], 'video/mp4')
+        self.assertTrue(self.interface.image_is_gif(
+                            should_be_video['images'][0]))
         assert True
 
     def test_filter_gifs(self):
+        filtered = self.interface.filter_gifs_from_gallery_response(self.sample_rising_gallery_response)
         assert True
 
 
