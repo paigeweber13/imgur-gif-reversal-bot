@@ -19,7 +19,14 @@ class TestImgurInterface(unittest.TestCase):
             cls.sample_rising_gallery_response = json.load(f)
 
     def setUp(self):
+        filename = TestImgurInterface.SAMPLE_RISING_GALLERY_RESPONSE_FILENAME
+        with open(filename, 'r') as f:
+            self.sample_rising_gallery_response = json.load(f)
         self.interface = ii.ImgurInterface()
+    
+    def test_class_and_instance_jsons_are_identical(self):
+        self.assertEqual(TestImgurInterface.sample_rising_gallery_response,
+                         self.sample_rising_gallery_response)
 
     def test_image_is_gif(self):
         should_be_gif = TestImgurInterface.sample_rising_gallery_response['data'][13]
@@ -29,7 +36,6 @@ class TestImgurInterface(unittest.TestCase):
         self.assertEqual(should_be_gif['title'], 'Hungry Squirrel')
         self.assertTrue(self.interface.image_is_gif(
                             should_be_gif['images'][0]))
-        assert True
 
     def test_image_is_video(self):
         should_be_video = TestImgurInterface.sample_rising_gallery_response['data'][22]
@@ -37,7 +43,6 @@ class TestImgurInterface(unittest.TestCase):
         self.assertEqual(should_be_video['title'], 'Holy Shit')
         self.assertTrue(self.interface.image_is_gif(
                             should_be_video['images'][0]))
-        assert True
 
     def test_filter_gifs(self):
         filtered = self.interface.filter_gifs_from_gallery_response(TestImgurInterface.sample_rising_gallery_response)
