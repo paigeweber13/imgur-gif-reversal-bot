@@ -56,15 +56,22 @@ class ImgurInterface:
             image_metadata['type'][:5] == 'video'
     
     def filter_gifs_from_gallery_response(self, response):
-        for post in response['data']:
-            if 'images' in post:
-                # post['images'] = list(filter(self.image_is_gif,
-                # post['images']))
-                # print('before', post['images'])
-                post['images'] = [image for image in post['images'] if self.image_is_gif(image)]
-                if len(post['images']) == 0:
-                    response['data'].remove(post)
+        index_of_posts_to_remove = []
+        for i in range(len(response['data'])):
+            if 'images' in response['data'][i]:
+                # response['data'][i] is current post
+                response['data'][i]['images'] = [image for image in response['data'][i]['images'] if self.image_is_gif(image)]
+                # for image in response['data'][i]['images']:
+                #     print(image['type'])
+                if len(response['data'][i]['images']) == 0:
+                    index_of_posts_to_remove.append(i)
                 # print('after', post['images'])
+
+        # remove back-to-front so that we dont get 'index out of bounds' error
+        # and also so we delete the correct parts of the list.
+        index_of_posts_to_remove.reverse()
+        for index_of_post_without_gif in index_of_posts_to_remove:
+            response['data'].pop(index_of_post_without_gif)
         return response
 
     def get_rising_gifs(self):
