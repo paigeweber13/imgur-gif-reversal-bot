@@ -15,9 +15,10 @@ import os
 import json
 
 RESPONSE_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), 
+    os.path.join(os.path.dirname(__file__),
                  'new-data')
-    )
+)
+
 
 def print_stuff_from_rising_respose(rising_response):
     for page in rising_response:
@@ -40,6 +41,7 @@ def print_stuff_from_rising_respose(rising_response):
             #         print()
             # print()
 
+
 def main():
     interface = ii.ImgurInterface()
 
@@ -50,13 +52,14 @@ def main():
         interface.refresh_access_token()
     else:
         print('no need to refresh access token!')
-    
+
     print('getting rising gifs')
     rising_gifs = interface.get_rising_gifs()
     filename = RESPONSE_DIR + '/rising-gifs-response.json'
     with open(filename, 'w') as f:
         json.dump(rising_gifs, f)
         print('response output to ' + filename + ' for manual examination')
+
 
 if __name__ == '__main__':
     main()
