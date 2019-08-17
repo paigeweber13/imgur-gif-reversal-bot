@@ -61,11 +61,8 @@ class ImgurInterface:
             if 'images' in response['data'][i]:
                 # response['data'][i] is current post
                 response['data'][i]['images'] = [image for image in response['data'][i]['images'] if self.image_is_gif(image)]
-                # for image in response['data'][i]['images']:
-                #     print(image['type'])
                 if len(response['data'][i]['images']) == 0:
                     index_of_posts_to_remove.append(i)
-                # print('after', post['images'])
 
         # remove back-to-front so that we dont get 'index out of bounds' error
         # and also so we delete the correct parts of the list.
@@ -77,10 +74,8 @@ class ImgurInterface:
     def get_rising_gifs(self):
         num_pages_to_get = 1
         responses = []
-        for i in range(0, num_pages_to_get):
-            # i is incremented because imgur starts with page 1
-            i+=1
-
+        # i is incremented because imgur starts with page 1
+        for i in range(1, num_pages_to_get+1):
             rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/' + str(i) + '?album_previews=true'
             headers = {
                 'Authorization': 'Client-ID ' + self.keys['clientId'],
