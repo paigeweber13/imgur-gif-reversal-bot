@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from .context import reverse_gifs
+from .context import gif_reverser
 
 import unittest
 
 
-class TestImgurInterface(unittest.TestCase):
+class TestGifReverser(unittest.TestCase):
     """Basic test cases."""
 
     def test_absolute_truth_and_meaning(self):
