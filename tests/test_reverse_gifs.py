@@ -15,7 +15,7 @@ TEST_MP4_SOUND = ROOT_DIR + '/sample-data/monkey-car.mp4'
 EXPECTED_MP4_NO_SOUND_REVERSED = ROOT_DIR + \
     '/sample-data/bagged-kitty-reversed.mp4'
 EXPECTED_GIF_REVERSED = ROOT_DIR + \
-    '/sample-data/spock-reversed.gif'
+    '/sample-data/spock-reversed.mp4'
 
 OUTPUT_FILENAME = ROOT_DIR + '/reversed-tmp.mp4'
 
