@@ -2,3 +2,4 @@
 imgur_interface/auth\.json
 __pycache__
 new-data
+tests/reversed-tmp.mp4
