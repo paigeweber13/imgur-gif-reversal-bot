@@ -19,6 +19,7 @@ RESPONSE_DIR = os.path.abspath(
                  'new-data')
 )
 
+interface = ii.ImgurInterface()
 
 def print_stuff_from_rising_respose(rising_response):
     for page in rising_response:
@@ -42,16 +43,19 @@ def print_stuff_from_rising_respose(rising_response):
             # print()
 
 
-def main():
-    interface = ii.ImgurInterface()
-
-    # print('keys:', json.dumps(interface.keys, indent=2, sort_keys=True))
+def update_auth_if_needed():
     print('configuring authorization')
     if(interface.is_access_token_refresh_needed()):
         print('refreshing access token...')
         interface.refresh_access_token()
     else:
         print('no need to refresh access token!')
+    interface.set_headers()
+
+
+def main():
+    update_auth_if_needed()
+    print('interface headers: ', interface.headers)
 
     print('getting rising gifs')
     rising_gifs = interface.get_rising_gifs()
