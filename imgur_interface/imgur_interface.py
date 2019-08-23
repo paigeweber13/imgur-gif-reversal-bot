@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import random
 import requests
 import sys
 
@@ -14,7 +15,14 @@ class ImgurInterface:
         self.auth_filename = os.path.abspath(
             os.path.join(os.path.dirname(__file__), 'auth.json'))
         self.keys = {}
+        self.headers = {}
         self.get_all_keys_from_json()
+        self.set_headers()
+
+    def set_headers(self):
+        self.headers = {
+            'Authorization': 'Client-ID ' + self.keys['clientId'],
+        }
 
     def get_all_keys_from_json(self):
         with open(self.auth_filename, 'r') as f:
@@ -77,16 +85,37 @@ class ImgurInterface:
     def get_rising_gifs(self):
         num_pages_to_get = 1
         responses = []
-        # i is incremented because imgur starts with page 1
+        # i starts at 1 because imgur starts with page 1
         for i in range(1, num_pages_to_get+1):
             rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/' + \
                 str(i) + '?album_previews=true'
-            headers = {
-                'Authorization': 'Client-ID ' + self.keys['clientId'],
-            }
-            r = requests.get(rising_gallery_url, headers=headers)
+            r = requests.get(rising_gallery_url, headers=self.headers)
 
             response = json.loads(r.text)
             response = self.filter_gifs_from_gallery_response(response)
             responses.append(response)
         return responses
+
+    def post_reversed_gif(self, path_to_gif: str):
+        upload_url = API_ROOT + '3/upload'
+        image_name = path_to_gif.split('/')[-1] + ('%32x' % random.getrandbits(32)).strip()
+        params = {
+            'type': 'file',
+            'name': image_name,
+            'title': image_name,
+        }
+        with open(path_to_gif, 'rb') as f:
+            params['video'] = f.read()
+        r = requests.post(upload_url, data=params, headers=self.headers)
+        print('RESPONSE FROM POSTING REVERSED GIF')
+        print(json.dumps(r.text, indent=2, sort_keys=True))
+
+    def comment_reversed_gif(self, id: str, url_to_image: str):
+        comment_url = API_ROOT + '3/comment'
+        params = {
+            'image_id': id,
+            'comment': url_to_image
+        }
+        r = requests.post(comment_url, data=params, headers=self.headers)
+        print('RESPONSE FROM COMMENTING A GIF')
+        print(json.dumps(r.text, indent=2, sort_keys=True))
