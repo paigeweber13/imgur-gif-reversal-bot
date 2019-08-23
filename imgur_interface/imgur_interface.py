@@ -6,8 +6,11 @@ import requests
 import sys
 
 from datetime import datetime
+from retrying import retry
 
 API_ROOT = 'https://api.imgur.com/'
+# ID where gifs will be added to
+ALBUM_ID = 'PO2xwN7'
 
 
 class ImgurInterface:
@@ -20,8 +23,11 @@ class ImgurInterface:
         self.set_headers()
 
     def set_headers(self):
-        self.headers = {
+        self.client_id_headers = {
             'Authorization': 'Client-ID ' + self.keys['clientId'],
+        }
+        self.oauth_headers = {
+            'Authorization': 'Bearer ' + self.keys['accessToken'],
         }
 
     def get_all_keys_from_json(self):
@@ -89,7 +95,7 @@ class ImgurInterface:
         for i in range(1, num_pages_to_get+1):
             rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/' + \
                 str(i) + '?album_previews=true'
-            r = requests.get(rising_gallery_url, headers=self.headers)
+            r = requests.get(rising_gallery_url, headers=self.client_id_headers)
 
             response = json.loads(r.text)
             response = self.filter_gifs_from_gallery_response(response)
@@ -98,24 +104,46 @@ class ImgurInterface:
 
     def post_reversed_gif(self, path_to_gif: str):
         upload_url = API_ROOT + '3/upload'
-        image_name = path_to_gif.split('/')[-1] + ('%32x' % random.getrandbits(32)).strip()
-        params = {
+        image_name = ('%32x' % random.getrandbits(32)).strip() \
+                + path_to_gif.split('/')[-1]
+        body = {
             'type': 'file',
             'name': image_name,
             'title': image_name,
+            'album': ALBUM_ID,
+        }
+        files = {
         }
         with open(path_to_gif, 'rb') as f:
-            params['video'] = f.read()
-        r = requests.post(upload_url, data=params, headers=self.headers)
-        print('RESPONSE FROM POSTING REVERSED GIF')
-        print(json.dumps(r.text, indent=2, sort_keys=True))
+            files['video'] = f.read()
+        r = requests.post(upload_url, data=body, files=files, 
+                headers=self.oauth_headers)
+        # print('RESPONSE FROM POSTING REVERSED GIF')
+        response_as_dict = json.loads(r.text)
+        # print(json.dumps(response_as_dict, indent=2, sort_keys=True))
+        return response_as_dict
+    
+    @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000)
+    def check_if_processing(self, image_id: str):
+        get_image_url = API_ROOT + '3/image/' + image_id
+        r = requests.get(get_image_url, headers=self.client_id_headers)
+        response_as_dict = json.loads(r.text)
+        status = response_as_dict['data']['processing']['status']
+        # print('response from image get:', response_as_dict)
+        print('processing status for image', image_id, ':', status)
+        if status != 'completed':
+            raise IOError('Image is still processing...')
+        return response_as_dict
 
-    def comment_reversed_gif(self, id: str, url_to_image: str):
+    def comment_reversed_gif(self, id_of_image_to_comment_on: str,
+            url_of_reversed_gif: str):
         comment_url = API_ROOT + '3/comment'
         params = {
-            'image_id': id,
-            'comment': url_to_image
+            'image_id': id_of_image_to_comment_on,
+            'comment': url_of_reversed_gif
         }
-        r = requests.post(comment_url, data=params, headers=self.headers)
-        print('RESPONSE FROM COMMENTING A GIF')
-        print(json.dumps(r.text, indent=2, sort_keys=True))
+        r = requests.post(comment_url, data=params, headers=self.oauth_headers)
+        # print('RESPONSE FROM COMMENTING A GIF')
+        response_as_dict = json.loads(r.text)
+        # print(json.dumps(response_as_dict, indent=2, sort_keys=True))
+        return response_as_dict
