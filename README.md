@@ -1,3 +1,9 @@
+# TODO:
+* put everything from manual test together into end_to_end
+* write script that does everything from the command line
+* put script on server with cronjob to run it regularly (how often to not go
+  over API limit?)
+
 # Notes
 ## Authorization
 ### Resources:
