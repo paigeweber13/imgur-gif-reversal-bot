@@ -31,9 +31,17 @@ def find_current_time_for_full_rising_refresh():
         num_common_posts = len(start_ids.intersection(current_ids))
 
     ### TODO:
-    # * set rate to one minute
+    # * set rate to something more regular... every 2 minutes?
+    #   every one minute is dangerous because that's over the amount of
+    #   requests per day I can do.
     # * gather data: number of common posts by minute passed
     # * graph data with seaborne
     end_time = datetime.datetime.now()
     diff = start_time - end_time
     print("time taken to have all new posts:", diff)
+
+def find_hourly_time_to_refresh_rising():
+    ### TODO:
+    # implement. This will run 'find_current_time_for...' every hour (?) to
+    # give us some data across a whole day.
+    pass
