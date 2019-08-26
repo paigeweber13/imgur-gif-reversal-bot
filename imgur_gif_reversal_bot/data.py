@@ -23,12 +23,17 @@ def find_current_time_for_full_rising_refresh():
         print("number of common posts: ", num_common_posts)
         print('waiting...')
         time.sleep(73)
+        # time.sleep(60)
         print('getting rising gifs again')
         # we could get an exception here.... like ConnectionError?
         # https://2.python-requests.org/en/master/_modules/requests/exceptions/
         current_ids = set(strip_ids_from_gallery_response(interface.get_rising_gifs()))
         num_common_posts = len(start_ids.intersection(current_ids))
 
+    ### TODO:
+    # * set rate to one minute
+    # * gather data: number of common posts by minute passed
+    # * graph data with seaborne
     end_time = datetime.datetime.now()
     diff = start_time - end_time
     print("time taken to have all new posts:", diff)
