@@ -3,6 +3,8 @@
 * write script that does everything from the command line
 * put script on server with cronjob to run it regularly (how often to not go
   over API limit?)
+* how to avoid duplicates? Look for comments with same name I guess? Wait a
+  long time so we can be reasonably sure that there are only new posts
 
 # Notes
 ## Authorization
