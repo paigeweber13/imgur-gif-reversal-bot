@@ -49,6 +49,3 @@ class TestImgurInterface(unittest.TestCase):
                         TestImgurInterface.interface.image_is_gif(image))
         assert True
 
-
-if __name__ == '__main__':
-    unittest.main()

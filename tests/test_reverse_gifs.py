@@ -47,6 +47,3 @@ class TestGifReverser(unittest.TestCase):
         self.assertEqual(expected_height, actual_height)
         self.assertEqual(expected_height, actual_height)
         self.assertEqual(expected_layers, actual_layers)
-
-if __name__ == '__main__':
-    unittest.main()

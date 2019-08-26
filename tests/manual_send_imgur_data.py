@@ -42,6 +42,3 @@ def main():
     #### how to confirm
     print('go to https://imgur.com/gallery/' + TEST_GALLERY_ID, 
             'to check if commenting the reversed gif was successful')
-
-if __name__ == '__main__':
-    main()

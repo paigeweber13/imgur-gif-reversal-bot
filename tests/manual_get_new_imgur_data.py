@@ -64,6 +64,3 @@ def main():
         json.dump(rising_gifs, f)
         print('response output to ' + filename + ' for manual examination')
 
-
-if __name__ == '__main__':
-    main()
