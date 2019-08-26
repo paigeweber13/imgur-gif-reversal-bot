@@ -37,7 +37,7 @@ def find_current_time_for_full_rising_refresh():
     # * gather data: number of common posts by minute passed
     # * graph data with seaborne
     end_time = datetime.datetime.now()
-    diff = start_time - end_time
+    diff = end_time - start_time
     print("time taken to have all new posts:", diff)
 
 def find_hourly_time_to_refresh_rising():
