@@ -11,6 +11,16 @@ https://api.imgur.com/oauth2
 https://apidocs.imgur.com/?version=latest#register-an-application-important
 
 ## Imgur API
+### Rate limiting
+12,500 post requests per day
+uploads count as 10 requests
+
+24 hours in a day
+approx. 500 requests per hour
+     or 50  uploads per hour
+
+which is one upload per 1.2 minutes (1 minutes 12 seconds)
+
 ### Getting rising usersub
 GET https://api.imgur.com/3/gallery/user/rising/day/1?album_previews=true
 
