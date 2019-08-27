@@ -10,11 +10,11 @@ from .context import imgur_interface
 interface = imgur_interface.ImgurInterface()
 
 def strip_ids_from_gallery_response(gallery_response):
-    return [x['id'] for x in gallery_response[0]['data']]
+    return [x['id'] for x in gallery_response['data']]
 
 def find_current_time_for_full_rising_refresh():
     start_time = datetime.datetime.now()
-    start_ids = set(strip_ids_from_gallery_response(interface.get_rising_gifs()))
+    start_ids = set(strip_ids_from_gallery_response(interface.get_rising_gifs()[0]))
     current_ids = start_ids
 
     # while the current response and the original response have ANYTHING in
@@ -32,7 +32,7 @@ def find_current_time_for_full_rising_refresh():
         print('getting rising gifs again')
         # we could get an exception here.... like ConnectionError?
         # https://2.python-requests.org/en/master/_modules/requests/exceptions/
-        current_ids = set(strip_ids_from_gallery_response(interface.get_rising_gifs()))
+        current_ids = set(strip_ids_from_gallery_response(interface.get_rising_gifs()[0]))
         num_common_posts = len(start_ids.intersection(current_ids))
 
     ### TODO:
