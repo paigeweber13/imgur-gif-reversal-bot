@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import logging
 import json
 import os
@@ -50,18 +51,18 @@ def configure_authentication():
     interface.set_headers()
     # print('client_id headers: ', interface.client_id_headers)
     # print('oauth_headers: ', interface.oauth_headers)
-my_folder
-def comy_foldermment_reversed_gif_on_all_rising_gifs():
-    comy_foldernfigure_authentication()
-    prmy_folderint('getting rising gifs')
+
+def comment_reversed_gif_on_all_rising_gifs():
+    configure_authentication()
+    print('getting rising gifs')
     rising_gifs = interface.get_rising_gifs()
     filtered = interface.filter_gifs_from_gallery_response(rising_gifs[0])
     reverser = gif_reverser.GifReverser()
     clean_buffer()
     
     for post in filtered['data']:
-      logging.info('-------------------------------------------')
-      logging.info('working on post that includes a gif:', post['id'])
+        logging.info('-------------------------------------------')
+        logging.info('working on post that includes a gif:', post['id'])
 
         image_to_reverse = None
         for image in post['images']:
