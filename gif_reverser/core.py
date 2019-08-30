@@ -17,6 +17,7 @@ class GifReverser:
             success,image = vidcap.read()
         return (framerate, frames)
 
+    # also works with mp4 files
     def reverse_gif(self, gif_filename: str, output_filename: str):
         framerate, frames = self.get_frames(gif_filename)
         height, width, layers = frames[0].shape
@@ -27,6 +28,3 @@ class GifReverser:
         for i in range(len(frames)-1, -1, -1):
             out.write(frames[i])
         out.release()
-
-    def reverse_mp4(self, mp4):
-        pass
