@@ -147,3 +147,13 @@ class ImgurInterface:
         response_as_dict = json.loads(r.text)
         # print(json.dumps(response_as_dict, indent=2, sort_keys=True))
         return response_as_dict
+
+    def download_image(self, image_id: str, filename: str):
+        url = 'https://i.imgur.com/' + image_id + '.mp4'
+        r = requests.get(url, headers=self.client_id_headers)
+
+        if r.status_code == 200:
+            with open(filename, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=255):
+                    if chunk:
+                        f.write(chunk)
