@@ -22,6 +22,7 @@ def set_up_logging():
     current_time_string = datetime.datetime.now().strftime('%Y-%m-%d_%H%M.%S')
     log_filename = LOG_DIR + '/log-' + current_time_string + '.log'
     print('logging to', log_filename)
+    ### CHANGE THIS LINE IF YOU WANT MORE VERBOSE LOGGING
     logging.basicConfig(filename=log_filename, level=logging.INFO)
     logging.info('began logging at ' + current_time_string)
 
