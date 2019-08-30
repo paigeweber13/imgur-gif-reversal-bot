@@ -48,7 +48,12 @@ def comment_reversed_gif_on_all_rising_gifs():
     for post in filtered['data']:
         logging.info('-------------------------------------------')
         logging.info('working on post that includes a gif: ' + post['id'])
-        logging.info('\n' + json.dumps(post, indent=2, sort_keys=True))
+        logging.debug('post is printed below:\n' \
+                + json.dumps(post, indent=2, sort_keys=True))
+
+        if 'images' not in post:
+            logging.warn('no images in this post, skipping...')
+            continue
 
         image_to_reverse = None
         for image in post['images']:
@@ -86,15 +91,16 @@ def comment_reversed_gif_on_all_rising_gifs():
         interface.check_if_processing(upload_response['data']['id'])
         # interface.check_if_processing('67VhZNU')
 
-        ### wait 30 seconds between comments to avoid throttling
-        time.sleep(30)
-
         ### Comment on original post
         logging.info('commenting url to image....')
         comment_response = interface.comment_reversed_gif(post['id'], 
                 upload_response['data']['link'])
         logging.info('comment response:\n' + \
                 json.dumps(comment_response, indent=2, sort_keys=True))
+
+        ### wait 30 seconds between comments to avoid throttling
+        logging.info('waiting 30 seconds after commenting to avoid throttling...')
+        time.sleep(30)
 
 def main():
     comment_reversed_gif_on_all_rising_gifs()
