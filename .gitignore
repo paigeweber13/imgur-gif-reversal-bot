@@ -4,3 +4,4 @@ __pycache__
 new-data
 tests/reversed-tmp.mp4
 imgur_gif_reversal_bot/buffer
+logs
