@@ -55,7 +55,8 @@ def update_auth_if_needed():
 
 def main():
     update_auth_if_needed()
-    print('interface headers: ', interface.headers)
+    print('client_id headers: ', interface.client_id_headers)
+    print('oauth_headers: ', interface.oauth_headers)
 
     print('getting rising gifs')
     rising_gifs = interface.get_rising_gifs()
@@ -64,3 +65,12 @@ def main():
         json.dump(rising_gifs, f)
         print('response output to ' + filename + ' for manual examination')
 
+    print('downloading first gif')
+    first_gif_in_rising_data = rising_gifs[0]['data'][0]['images'][0]
+    print('first gif metadata:', first_gif_in_rising_data)
+    image_filename = RESPONSE_DIR + '/first-gif-in-rising'
+    interface.download_image(first_gif_in_rising_data['id'], image_filename)
+    print('first gif saved to ', image_filename)
+
+if __name__ == '__main__':
+    main()
