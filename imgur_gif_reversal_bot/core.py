@@ -67,7 +67,7 @@ def comment_reversed_gif_on_all_rising_gifs():
 
         ### Download image
         logging.info('downloading gif')
-        logging.info('gif metadata:\n' + json.dumps(image_to_reverse,
+        logging.debug('gif metadata:\n' + json.dumps(image_to_reverse,
                                                  indent=2, sort_keys=True))
         image_filename = BUFFER_DIR + '/' + post['id'] + '.mp4'
         interface.download_image(image_to_reverse['id'], image_filename)
@@ -82,7 +82,8 @@ def comment_reversed_gif_on_all_rising_gifs():
         ### upload reversed gif
         logging.info('uploading gif ' + output_filename)
         upload_response = interface.post_reversed_gif(output_filename)
-        logging.info('response from gif upload:\n' + \
+        logging.info('done!')
+        logging.debug('response from gif upload:\n' + \
                 json.dumps(upload_response, indent=2, sort_keys=True))
 
         ### checking
@@ -95,7 +96,8 @@ def comment_reversed_gif_on_all_rising_gifs():
         logging.info('commenting url to image....')
         comment_response = interface.comment_reversed_gif(post['id'], 
                 upload_response['data']['link'])
-        logging.info('comment response:\n' + \
+        logging.info('done!')
+        logging.debug('comment response:\n' + \
                 json.dumps(comment_response, indent=2, sort_keys=True))
 
         ### wait 30 seconds between comments to avoid throttling
