@@ -16,11 +16,6 @@ BUFFER_DIR = os.path.abspath(
                  'buffer')
 )
 
-LOG_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__),
-                 '../logs')
-)
-
 def clean_buffer():
     try:
         shutil.rmtree(BUFFER_DIR)
@@ -29,18 +24,6 @@ def clean_buffer():
         pass
 
     os.mkdir(BUFFER_DIR)
-
-    log_filename = BUFFER_DIR + '/log-' + \
-            datetime.datetime.now().strftime('%Y-%m-%d_%H%M.%S')
-    logging.basicConfig(filename=log_filename, level=logging.INFO)
-
-def set_up_logging():
-    # create logs directory
-    try:
-        os.makedirs(LOG_DIR)
-    except FileExistsError:
-        # do nothing, folder already exists!
-        pass
 
 def configure_authentication():
     if(interface.is_access_token_refresh_needed()):
@@ -54,15 +37,18 @@ def configure_authentication():
 
 def comment_reversed_gif_on_all_rising_gifs():
     configure_authentication()
-    print('getting rising gifs')
+    logging.info('getting rising gifs')
     rising_gifs = interface.get_rising_gifs()
     filtered = interface.filter_gifs_from_gallery_response(rising_gifs[0])
+    # logging.info('rising gifs:')
+    # logging.info(json.dumps(filtered, indent=2, sort_keys=True))
     reverser = gif_reverser.GifReverser()
     clean_buffer()
     
     for post in filtered['data']:
         logging.info('-------------------------------------------')
-        logging.info('working on post that includes a gif:', post['id'])
+        logging.info('working on post that includes a gif: ' + post['id'])
+        logging.info('\n' + json.dumps(post, indent=2, sort_keys=True))
 
         image_to_reverse = None
         for image in post['images']:
@@ -71,26 +57,27 @@ def comment_reversed_gif_on_all_rising_gifs():
                 break
 
         if image_to_reverse is None:
-            logging.warning('couldn\'t find a gif in post', post['id'], ', skipping.')
+            logging.warning('couldn\'t find a gif in post ' + post['id'] + ', skipping.')
             continue
 
         ### Download image
         logging.info('downloading gif')
-        logging.info('gif metadata:', image_to_reverse)
+        logging.info('gif metadata:\n' + json.dumps(image_to_reverse,
+                                                 indent=2, sort_keys=True))
         image_filename = BUFFER_DIR + '/' + post['id'] + '.mp4'
         interface.download_image(image_to_reverse['id'], image_filename)
-        logging.info('gif saved to ', image_filename)
+        logging.info('gif saved to ' + image_filename)
 
         ### Reverse video
-        logging.info('reversing gif', image_filename)
+        logging.info('reversing gif ' + image_filename)
         output_filename = ''.join(image_filename.split('.')[:-1]) + '-reversed.mp4'
         reverser.reverse_gif(image_filename, output_filename)
-        logging.info('reversed gif output to', output_filename)
+        logging.info('reversed gif output to ' + output_filename)
 
         ### upload reversed gif
-        logging.info('uploading gif', output_filename)
+        logging.info('uploading gif ' + output_filename)
         upload_response = interface.post_reversed_gif(output_filename)
-        logging.info('response from gif upload:',
+        logging.info('response from gif upload:\n' + \
                 json.dumps(upload_response, indent=2, sort_keys=True))
 
         ### checking
@@ -106,9 +93,8 @@ def comment_reversed_gif_on_all_rising_gifs():
         logging.info('commenting url to image....')
         comment_response = interface.comment_reversed_gif(post['id'], 
                 upload_response['data']['link'])
-        logging.info('comment response:', 
+        logging.info('comment response:\n' + \
                 json.dumps(comment_response, indent=2, sort_keys=True))
 
 def main():
-    set_up_logging()
     comment_reversed_gif_on_all_rising_gifs()

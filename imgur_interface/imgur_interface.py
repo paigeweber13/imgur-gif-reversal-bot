@@ -131,7 +131,7 @@ class ImgurInterface:
         response_as_dict = json.loads(r.text)
         status = response_as_dict['data']['processing']['status']
         # print('response from image get:', response_as_dict)
-        logging.info('processing status for image', image_id, ':', status)
+        logging.info('processing status for image ' + image_id + ': ' + status)
         if status != 'completed':
             raise IOError('Image is still processing...')
         return response_as_dict
