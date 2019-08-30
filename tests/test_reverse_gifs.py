@@ -33,7 +33,7 @@ class TestGifReverser(unittest.TestCase):
         expected_height, expected_width, expected_layers = expected.read()[1].shape
         actual_height, actual_width, actual_layers = actual.read()[1].shape
         self.assertEqual(expected_height, actual_height)
-        self.assertEqual(expected_height, actual_height)
+        self.assertEqual(expected_width, actual_width)
         self.assertEqual(expected_layers, actual_layers)
 
     def test_reverse_mp4_file(self):
@@ -45,5 +45,5 @@ class TestGifReverser(unittest.TestCase):
         expected_height, expected_width, expected_layers = expected.read()[1].shape
         actual_height, actual_width, actual_layers = actual.read()[1].shape
         self.assertEqual(expected_height, actual_height)
-        self.assertEqual(expected_height, actual_height)
+        self.assertEqual(expected_width, actual_width)
         self.assertEqual(expected_layers, actual_layers)
