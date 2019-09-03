@@ -151,7 +151,8 @@ class ImgurInterface:
 
     def download_image(self, image_id: str, filename: str):
         url = 'https://i.imgur.com/' + image_id + '.mp4'
-        r = requests.get(url, headers=self.client_id_headers)
+        # r = requests.get(url, headers=self.client_id_headers)
+        r = requests.get(url)
 
         if r.status_code == 200:
             with open(filename, 'wb') as f:

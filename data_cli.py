@@ -14,7 +14,7 @@ def main():
 
     with open(OUTPUT_FILE) as f:
         json.dump(time_taken_by_hour, f)
-    data.graph_hourly_time_to_refresh(time_aken_by_hour)
+    data.graph_hourly_time_to_refresh(time_taken_by_hour)
 
 if __name__ == '__main__':
     main()
