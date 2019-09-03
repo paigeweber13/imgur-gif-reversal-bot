@@ -6,7 +6,7 @@ from imgur_gif_reversal_bot import data
 
 import json
 
-OUTPUT_FILE = 'output.json'
+OUTPUT_FILE = 'data-output.json'
 
 def main():
     # data.find_current_time_for_full_rising_refresh()
