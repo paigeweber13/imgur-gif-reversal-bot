@@ -1,4 +1,6 @@
+import csv
 import datetime
+import os
 import time
 
 import matplotlib.pyplot as plt
@@ -35,19 +37,27 @@ def find_current_time_for_full_rising_refresh():
         current_ids = set(strip_ids_from_gallery_response(interface.get_rising_gifs()[0]))
         num_common_posts = len(start_ids.intersection(current_ids))
 
-    ### TODO:
-    # * gather data: number of common posts by minute passed
-    # * graph data with seaborne
     end_time = datetime.datetime.now()
     diff = end_time - start_time
     print("time taken to have all new posts:", diff)
     return diff
 
+def find_current_time_for_refresh_and_save_to_csv(csv_filename: str):
+    start_time = datetime.datetime.now().strftime('%Y-%m-%d_%H%M')
+    duration = find_current_time_for_full_rising_refresh()
+
+    if not os.path.exists(csv_filename):
+        with open(csv_filename, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow('timestamp', 'time for refresh')
+
+    with open(csv_filename, 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(start_time, duration)
+
+
 def find_hourly_time_to_refresh_rising():
-    ### TODO:
-    # * implement. This will run 'find_current_time_for...' every hour (?) to
-    #   give us some data across a whole day.
-    # * graph data with seaborne
+    ### DEPRECATED
     time_taken_by_hour = {}
 
     for i in range(24):
@@ -63,13 +73,16 @@ def find_hourly_time_to_refresh_rising():
         
     return time_taken_by_hour
 
-def graph_hourly_time_to_refresh(time_taken_by_hour):
+def graph_hourly_time_to_refresh(csv_filename: str):
+    # TODO: test
     sns.set(style="white", context="talk")
     x_hours = []
     y_times_taken = []
-    for key, value in time_taken_by_hour:
-        x_hours.append(key)
-        y_times_taken.append(value)
+
+    with open(csv_filename, 'r') as f:
+        for row in f:
+            x_hours.append(row[0])
+            y_times_taken.append(row[1])
     
     x_hours = np.array(x_hours)
     y_times_taken = np.array(y_times_taken)
