@@ -28,9 +28,13 @@ def find_current_time_for_full_rising_refresh():
     while(num_common_posts):
         print("number of common posts: ", num_common_posts)
         print('waiting...')
-        # minimum amount of time between requests to not exceed daily limit
-        # time.sleep(73)
-        time.sleep(120)
+        try:
+            # minimum amount of time between requests to not exceed daily limit
+            # time.sleep(73)
+            time.sleep(120)
+        except KeyboardInterrupt:
+            print('\ncaught KeyboardInterrupt, cancelling and returning elapsed time so far')
+            break
         print('getting rising gifs again')
         # we could get an exception here.... like ConnectionError?
         # https://2.python-requests.org/en/master/_modules/requests/exceptions/
