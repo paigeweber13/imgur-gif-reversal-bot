@@ -51,13 +51,14 @@ def find_current_time_for_refresh_and_save_to_csv(csv_filename: str):
     duration = find_current_time_for_full_rising_refresh()
 
     if not os.path.exists(csv_filename):
+        print('csv file does not exist, creating...')
         with open(csv_filename, 'w') as f:
             writer = csv.writer(f)
-            writer.writerow('timestamp', 'time for refresh')
+            writer.writerow(['timestamp', 'time for refresh'])
 
-    with open(csv_filename, 'w') as f:
+    with open(csv_filename, 'a') as f:
         writer = csv.writer(f)
-        writer.writerow(start_time, duration)
+        writer.writerow([start_time, duration])
 
 
 def find_hourly_time_to_refresh_rising():
