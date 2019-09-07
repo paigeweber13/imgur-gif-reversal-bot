@@ -10,11 +10,9 @@ pylint = "*"
 
 [packages]
 opencv-python = "*"
-numpy = "*"
+plotly = "*"
 retrying = "*"
 requests = "*"
-seaborn = "*"
-matplotlib = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,11 +1,13 @@
 import csv
 import datetime
 import os
+import pandas
+import plotly.express as px
 import time
 
-import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import seaborn as sns
 
 from .context import imgur_interface
 
@@ -61,36 +63,22 @@ def find_current_time_for_refresh_and_save_to_csv(csv_filename: str):
         writer.writerow([start_time, duration])
 
 
-def find_hourly_time_to_refresh_rising():
-    ### DEPRECATED
-    time_taken_by_hour = {}
-
-    for i in range(24):
-        while datetime.datetime.now().minute != 0:
-            print('not first minute of this hour, waiting...')
-            time.sleep(55)
-        
-        ## First minute of every hour!
-        this_hour = datetime.datetime.now().hour
-        print('#### HOUR:', this_hour)
-        print('Finding time taken to refresh rising....')
-        time_taken_by_hour[this_hour] = find_current_time_for_full_rising_refresh()
-        
-    return time_taken_by_hour
-
 def graph_hourly_time_to_refresh(csv_filename: str):
-    # TODO: test
-    sns.set(style="white", context="talk")
     x_hours = []
     y_times_taken = []
 
     with open(csv_filename, 'r') as f:
+        # skip the header line
+        f.readline()
         for row in f:
-            x_hours.append(row[0])
-            y_times_taken.append(row[1])
-    
-    x_hours = np.array(x_hours)
-    y_times_taken = np.array(y_times_taken)
+            row = row.split(',')
+            x_hours.append(row[0][11:13])
+            time_split = row[1].split(':')
+            time_taken = datetime.timedelta(hours=int(time_split[0]), 
+                    minutes=int(time_split[1]), seconds=float(time_split[2]))
+            y_times_taken.append(time_taken.total_seconds()/60)
 
-    plot = sns.barplot(x=x_hours, y=y_times_taken, palette='vlag')
-    plot.savefig('output.png')
+    d = {'hour': x_hours, 'time taken (min)': y_times_taken}
+    df = pandas.DataFrame(data=d)
+    fig = px.histogram(df, x="time taken (min)")
+    fig.show()
