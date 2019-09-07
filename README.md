@@ -1,11 +1,12 @@
 # TODO:
 * [x] put everything from manual test together into end_to_end
 * [x] write script that does everything from the command line
-* [ ] put script on server with cronjob to run it regularly (how often to not go
+* [x] put script on server with cronjob to run it regularly (how often to not go
       over API limit?)
-      * [ ] how many requests per run of 'bot_cli.py'?
-* [ ] how to avoid duplicates? Look for comments with same name I guess? Wait a
+      * [x] how many requests per run of 'bot_cli.py'?
+* [x] how to avoid duplicates? Look for comments with same name I guess? Wait a
       long time so we can be reasonably sure that there are only new posts?
+* [ ] rewrite readme now that this is basically finished
 
 # Notes
 ## Authorization
