@@ -11,6 +11,10 @@ OUTPUT_FILE = 'data-output.csv'
 HELP_TEXT = 'supply \'c\' for collect or \'g\' for graph as the only argument'
 
 def collect():
+    """
+    expected usage is putting 'python data_cli.py c' in a crontab, hourly or
+    so. 
+    """
     data.find_current_time_for_refresh_and_save_to_csv(OUTPUT_FILE)
 
 def graph():
