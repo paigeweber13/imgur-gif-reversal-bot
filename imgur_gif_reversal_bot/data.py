@@ -80,5 +80,5 @@ def graph_hourly_time_to_refresh(csv_filename: str):
 
     d = {'hour': x_hours, 'time taken (min)': y_times_taken}
     df = pandas.DataFrame(data=d)
-    fig = px.histogram(df, x="time taken (min)")
+    fig = px.histogram(df, x="time taken (min)", nbins=8)
     fig.show()
