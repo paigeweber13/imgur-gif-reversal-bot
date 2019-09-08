@@ -103,6 +103,24 @@ class ImgurInterface:
             responses.append(response)
         return responses
 
+    def get_gallery_page_gifs(self, section: str, sort: str, num_pages: int):
+        """
+        section and stort correspond to those keys in the api call. See
+        https://apidocs.imgur.com/?version=latest#eff60e84-5781-4c12-926a-208dc4c7cc94
+        for more info
+        """
+        responses = []
+        # i starts at 1 because imgur starts with page 1
+        for i in range(1, num_pages+1):
+            rising_gallery_url = API_ROOT + '3/gallery/' + section + \
+                '/' + sort + '/day/' + str(i) + '?album_previews=true'
+            r = requests.get(rising_gallery_url, headers=self.client_id_headers)
+
+            response = json.loads(r.text)
+            response = self.filter_gifs_from_gallery_response(response)
+            responses.append(response)
+        return responses
+
     def post_reversed_gif(self, path_to_gif: str):
         upload_url = API_ROOT + '3/upload'
         image_name = ('%32x' % random.getrandbits(32)).strip() \

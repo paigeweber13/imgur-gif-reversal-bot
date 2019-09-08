@@ -59,7 +59,7 @@ def main():
     print('oauth_headers: ', interface.oauth_headers)
 
     print('getting rising gifs')
-    rising_gifs = interface.get_rising_gifs()
+    rising_gifs = interface.get_gallery_page_gifs('user', 'rising', 1)
     filename = RESPONSE_DIR + '/rising-gifs-response.json'
     with open(filename, 'w') as f:
         json.dump(rising_gifs, f)
