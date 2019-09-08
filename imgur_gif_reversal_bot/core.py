@@ -38,13 +38,13 @@ def configure_authentication():
 def comment_reversed_gif_on_all_rising_gifs():
     configure_authentication()
     logging.info('getting rising gifs')
-    rising_gifs = interface.get_gallery_page_gifs('user', 'rising', 1)
+    rising_gifs = interface.get_gallery_page_gifs('user', 'rising', 1)[0]
     # logging.info('rising gifs:')
-    # logging.info(json.dumps(filtered, indent=2, sort_keys=True))
+    # logging.info(json.dumps(rising_gifs, indent=2, sort_keys=True))
     reverser = gif_reverser.GifReverser()
     clean_buffer()
     
-    for post in filtered['data']:
+    for post in rising_gifs['data']:
         logging.info('-------------------------------------------')
         logging.info('working on post that includes a gif: ' + post['id'])
         logging.debug('post is printed below:\n' \
