@@ -40,7 +40,7 @@ def find_current_time_for_full_rising_refresh():
         print('getting rising gifs again')
         # we could get an exception here.... like ConnectionError?
         # https://2.python-requests.org/en/master/_modules/requests/exceptions/
-        current_ids = set(strip_ids_from_gallery_response(interface.interface.get_gallery_page_gifs('user', 'rising', 1)[0]))
+        current_ids = set(strip_ids_from_gallery_response(interface.get_gallery_page_gifs('user', 'rising', 1)[0]))
         num_common_posts = len(start_ids.intersection(current_ids))
 
     end_time = datetime.datetime.now()
