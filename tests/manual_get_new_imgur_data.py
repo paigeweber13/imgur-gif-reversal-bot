@@ -21,6 +21,7 @@ RESPONSE_DIR = os.path.abspath(
 
 interface = ii.ImgurInterface()
 
+
 def print_stuff_from_rising_respose(rising_response):
     for page in rising_response:
         for post in page['data']:
@@ -71,6 +72,7 @@ def main():
     image_filename = RESPONSE_DIR + '/first-gif-in-rising'
     interface.download_image(first_gif_in_rising_data['id'], image_filename)
     print('first gif saved to ', image_filename)
+
 
 if __name__ == '__main__':
     main()

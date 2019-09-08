@@ -19,6 +19,7 @@ EXPECTED_GIF_REVERSED = ROOT_DIR + \
 
 OUTPUT_FILENAME = ROOT_DIR + '/reversed-tmp.mp4'
 
+
 class TestGifReverser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -29,20 +30,23 @@ class TestGifReverser(unittest.TestCase):
         expected = cv2.VideoCapture(EXPECTED_GIF_REVERSED)
         actual = cv2.VideoCapture(OUTPUT_FILENAME)
         self.assertEqual(expected.get(cv2.CAP_PROP_FPS),
-            actual.get(cv2.CAP_PROP_FPS))
-        expected_height, expected_width, expected_layers = expected.read()[1].shape
+                         actual.get(cv2.CAP_PROP_FPS))
+        expected_height, expected_width, expected_layers = expected.read()[
+            1].shape
         actual_height, actual_width, actual_layers = actual.read()[1].shape
         self.assertEqual(expected_height, actual_height)
         self.assertEqual(expected_width, actual_width)
         self.assertEqual(expected_layers, actual_layers)
 
     def test_reverse_mp4_file(self):
-        TestGifReverser.reverser.reverse_gif(TEST_MP4_NO_SOUND, OUTPUT_FILENAME)
+        TestGifReverser.reverser.reverse_gif(
+            TEST_MP4_NO_SOUND, OUTPUT_FILENAME)
         expected = cv2.VideoCapture(EXPECTED_MP4_NO_SOUND_REVERSED)
         actual = cv2.VideoCapture(OUTPUT_FILENAME)
         self.assertEqual(expected.get(cv2.CAP_PROP_FPS),
-            actual.get(cv2.CAP_PROP_FPS))
-        expected_height, expected_width, expected_layers = expected.read()[1].shape
+                         actual.get(cv2.CAP_PROP_FPS))
+        expected_height, expected_width, expected_layers = expected.read()[
+            1].shape
         actual_height, actual_width, actual_layers = actual.read()[1].shape
         self.assertEqual(expected_height, actual_height)
         self.assertEqual(expected_width, actual_width)

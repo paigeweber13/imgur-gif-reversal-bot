@@ -50,10 +50,11 @@ class TestImgurInterface(unittest.TestCase):
         assert True
 
     def test_get_gallery_only_gives_gifs(self):
-        responses = TestImgurInterface.interface.get_gallery_page_gifs('user', 'rising', 1)
+        responses = TestImgurInterface.interface.get_gallery_page_gifs(
+            'user', 'rising', 1)
         for post in responses[0]['data']:
             if 'images' in post:
                 for image in post['images']:
                     print(image)
-                    self.assertTrue(TestImgurInterface.interface.image_is_gif(image))
-
+                    self.assertTrue(
+                        TestImgurInterface.interface.image_is_gif(image))

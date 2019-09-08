@@ -2,6 +2,7 @@
 
 import cv2
 
+
 class GifReverser:
     def __init__(self):
         pass
@@ -11,10 +12,10 @@ class GifReverser:
         framerate = vidcap.get(cv2.CAP_PROP_FPS)
         frames = []
 
-        success,image = vidcap.read()
+        success, image = vidcap.read()
         while success:
             frames.append(image)
-            success,image = vidcap.read()
+            success, image = vidcap.read()
         return (framerate, frames)
 
     # also works with mp4 files

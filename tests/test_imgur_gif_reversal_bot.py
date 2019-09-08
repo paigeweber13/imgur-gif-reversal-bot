@@ -22,7 +22,7 @@ class TestImgurInterface(unittest.TestCase):
 
     def test_strip_ids_from_gallery_response(self):
         actual = imgur_gif_reversal_bot_data.strip_ids_from_gallery_response(
-                self.sample_rising_gallery_response)
+            self.sample_rising_gallery_response)
         expected = [
             "zeDj2kN", "Rpbl2qJ", "hzgyVld", "CvleTCB", "7jASMTE", "UIXJpQK",
             "hkTN3ZR", "3uiJsmB", "dSsCy99", "TtcaD57", "b7eCiWs", "eyQJxFb",
