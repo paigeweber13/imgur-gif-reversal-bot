@@ -1,19 +1,19 @@
+# GifReversalBot
+A bot that comments on gifs uploaded to imgur with a reversed version of that
+gif. Is sometimes funny or entertaining.
+
+# The work of this bot
+Want to see it in action? Take a look here:
+https://imgur.com/user/GifReversalBot/comments 
+
 # TODO:
-* [x] put everything from manual test together into end_to_end
-* [x] write script that does everything from the command line
-* [x] put script on server with cronjob to run it regularly (how often to not go
-      over API limit?)
-      * [x] how many requests per run of 'bot_cli.py'?
-* [x] how to avoid duplicates? Look for comments with same name I guess? Wait a
-      long time so we can be reasonably sure that there are only new posts?
-* [ ] rewrite readme now that this is basically finished
+* [ ] implement parallelism so that we can gether data on multiple galleries at
+  once
+* [ ] start gathering data on how new posts are in each gallery and the score
+  of posts in each gallery.
+* [ ] improve argument handling in cli. Switch to argparse.ArgumentParser
 
 # Notes
-## Authorization
-### Resources:
-https://api.imgur.com/oauth2
-https://apidocs.imgur.com/?version=latest#register-an-application-important
-
 ## Imgur API
 ### Rate limiting
 12,500 post requests per day
