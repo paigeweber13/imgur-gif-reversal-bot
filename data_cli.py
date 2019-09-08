@@ -31,7 +31,7 @@ def collect():
     """
     # TODO: implement parallelism so these run simultaneously
     data.find_current_time_for_refresh_and_save_to_csv(HOT_VIRAL_REFRESH_CSV, 'hot', 'viral')
-    data.find_current_time_for_refresh_and_save_to_csv(USER_RISING_REFRESH_CSV, 'user', 'rising')
+    # data.find_current_time_for_refresh_and_save_to_csv(USER_RISING_REFRESH_CSV, 'user', 'rising')
 
 def graph():
     data.graph_hourly_time_to_refresh(USER_RISING_REFRESH_CSV)
