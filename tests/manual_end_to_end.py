@@ -1,7 +1,7 @@
-from context import imgur_gif_reversal_bot
+from context import imgur_gif_reversal_bot_core
 
 def main():
-    imgur_gif_reversal_bot.comment_reversed_gif_on_first_rising_gif()
+    imgur_gif_reversal_bot_core.comment_reversed_gif_on_all_rising_gifs()
 
 if __name__ == '__main__':
     main()
