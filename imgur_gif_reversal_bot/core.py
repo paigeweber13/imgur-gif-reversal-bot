@@ -51,7 +51,8 @@ def comment_reversed_gif_on_gallery_gifs(section: str, sort: str, num_pages: int
                 + json.dumps(post, indent=2, sort_keys=True))
 
         if 'images' not in post:
-            logging.warn('no images in this post, skipping...')
+            logging.warn('no images in this post, skipping. Metadata dumped below')
+            logging.warn(post)
             continue
 
         image_to_reverse = None
