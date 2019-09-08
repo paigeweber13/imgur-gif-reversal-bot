@@ -89,20 +89,6 @@ class ImgurInterface:
             response['data'].pop(index_of_post_without_gif)
         return response
 
-    def get_rising_gifs(self):
-        num_pages_to_get = 1
-        responses = []
-        # i starts at 1 because imgur starts with page 1
-        for i in range(1, num_pages_to_get+1):
-            rising_gallery_url = API_ROOT + '3/gallery/user/rising/day/' + \
-                str(i) + '?album_previews=true'
-            r = requests.get(rising_gallery_url, headers=self.client_id_headers)
-
-            response = json.loads(r.text)
-            response = self.filter_gifs_from_gallery_response(response)
-            responses.append(response)
-        return responses
-
     def get_gallery_page_gifs(self, section: str, sort: str, num_pages: int):
         """
         section and stort correspond to those keys in the api call. See
