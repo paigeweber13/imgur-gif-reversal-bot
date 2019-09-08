@@ -7,18 +7,34 @@ from imgur_gif_reversal_bot import data
 import json
 import sys
 
-OUTPUT_FILE = 'data-output.csv'
+HOT_VIRAL_REFRESH_CSV = 'data/hot-viral-refresh-times.csv'
+USER_RISING_REFRESH_CSV = 'data/user-rising-refresh-times.csv'
 HELP_TEXT = 'supply \'c\' for collect or \'g\' for graph as the only argument'
 
 def collect():
     """
     expected usage is putting 'python data_cli.py c' in a crontab, hourly or
     so. 
+
+    all combinations of sections and sorts:
+    
+    hot viral
+    hot top
+    hot time
+    top viral
+    top top
+    top time
+    user viral
+    user top
+    user time
+    user rising
     """
-    data.find_current_time_for_refresh_and_save_to_csv(OUTPUT_FILE)
+    # TODO: implement parallelism so these run simultaneously
+    data.find_current_time_for_refresh_and_save_to_csv(HOT_VIRAL_REFRESH_CSV, 'hot', 'viral')
+    data.find_current_time_for_refresh_and_save_to_csv(USER_RISING_REFRESH_CSV, 'user', 'rising')
 
 def graph():
-    data.graph_hourly_time_to_refresh(OUTPUT_FILE)
+    data.graph_hourly_time_to_refresh(USER_RISING_REFRESH_CSV)
 
 def main():
     # data.find_current_time_for_full_rising_refresh()

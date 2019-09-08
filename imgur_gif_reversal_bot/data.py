@@ -16,7 +16,7 @@ interface = imgur_interface.ImgurInterface()
 def strip_ids_from_gallery_response(gallery_response):
     return [x['id'] for x in gallery_response['data']]
 
-def find_current_time_for_full_rising_refresh():
+def find_current_time_for_full_refresh(section: str, sort: str):
     start_time = datetime.datetime.now()
     start_ids = set(strip_ids_from_gallery_response(interface.get_gallery_page_gifs('user', 'rising', 1)[0]))
     current_ids = start_ids
@@ -40,7 +40,7 @@ def find_current_time_for_full_rising_refresh():
         print('getting rising gifs again')
         # we could get an exception here.... like ConnectionError?
         # https://2.python-requests.org/en/master/_modules/requests/exceptions/
-        current_ids = set(strip_ids_from_gallery_response(interface.get_gallery_page_gifs('user', 'rising', 1)[0]))
+        current_ids = set(strip_ids_from_gallery_response(interface.get_gallery_page_gifs(section, sort, 1)[0]))
         num_common_posts = len(start_ids.intersection(current_ids))
 
     end_time = datetime.datetime.now()
@@ -48,9 +48,9 @@ def find_current_time_for_full_rising_refresh():
     print("time taken to have all new posts:", diff)
     return diff
 
-def find_current_time_for_refresh_and_save_to_csv(csv_filename: str):
+def find_current_time_for_refresh_and_save_to_csv(csv_filename: str, section: str, sort: str):
     start_time = datetime.datetime.now().strftime('%Y-%m-%d_%H%M')
-    duration = find_current_time_for_full_rising_refresh()
+    duration = find_current_time_for_full_refresh(section, sort)
 
     if not os.path.exists(csv_filename):
         print('csv file does not exist, creating...')
