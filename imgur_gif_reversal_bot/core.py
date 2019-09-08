@@ -35,10 +35,10 @@ def configure_authentication():
     # print('client_id headers: ', interface.client_id_headers)
     # print('oauth_headers: ', interface.oauth_headers)
 
-def comment_reversed_gif_on_all_rising_gifs():
+def comment_reversed_gif_on_gallery_gifs(section: str, sort: str, num_pages: int):
     configure_authentication()
-    logging.info('getting rising gifs')
-    rising_gifs = interface.get_gallery_page_gifs('user', 'rising', 1)[0]
+    logging.info('getting ' + section + ' ' + sort + ' gifs')
+    rising_gifs = interface.get_gallery_page_gifs(section, sort, num_pages)[0]
     # logging.info('rising gifs:')
     # logging.info(json.dumps(rising_gifs, indent=2, sort_keys=True))
     reverser = gif_reverser.GifReverser()
@@ -104,4 +104,4 @@ def comment_reversed_gif_on_all_rising_gifs():
         time.sleep(30)
 
 def main():
-    comment_reversed_gif_on_all_rising_gifs()
+    comment_reversed_gif_on_gallery_gifs('user', 'rising', 1)

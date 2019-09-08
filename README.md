@@ -26,7 +26,7 @@ approx. 500 requests per hour
 which is one upload per 1.2 minutes (1 minutes 12 seconds)
 
 ### Number of calls I make
-Requests in each call of comment_reversed_gif_on_all_rising_gifs
+Requests in each call of comment_reversed_gif_on_gallery_gifs
  * max 50 times (if every post is a gif)
    * 10 calls used for upload
    * 1 call for making comment

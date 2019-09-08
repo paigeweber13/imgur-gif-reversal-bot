@@ -28,7 +28,7 @@ def set_up_logging():
 
 def main():
     set_up_logging()
-    core.comment_reversed_gif_on_all_rising_gifs()
+    core.comment_reversed_gif_on_gallery_gifs('hot', 'viral', 1)
 
 if __name__ == '__main__':
     main()
