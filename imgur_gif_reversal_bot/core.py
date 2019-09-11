@@ -4,6 +4,7 @@ import logging
 import json
 import os
 import shutil
+import sys
 import time
 
 from .context import imgur_interface
@@ -110,6 +111,9 @@ def comment_reversed_gif_on_gallery_gifs(section: str, sort: str, num_pages: int
         logging.info(
             'waiting 30 seconds after commenting to avoid throttling...')
         time.sleep(30)
+
+    logging.info('finished commenting on every gif! Exiting...')
+    sys.exit(0)
 
 
 def main():
