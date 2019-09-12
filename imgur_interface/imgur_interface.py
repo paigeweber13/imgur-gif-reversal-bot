@@ -124,10 +124,17 @@ class ImgurInterface:
             files['video'] = f.read()
         r = requests.post(upload_url, data=body, files=files,
                           headers=self.oauth_headers)
-        # print('RESPONSE FROM POSTING REVERSED GIF')
-        response_as_dict = json.loads(r.text)
-        # print(json.dumps(response_as_dict, indent=2, sort_keys=True))
-        return response_as_dict
+        try:
+            # print('RESPONSE FROM POSTING REVERSED GIF')
+            response_as_dict = json.loads(r.text)
+            # print(json.dumps(response_as_dict, indent=2, sort_keys=True))
+            return response_as_dict
+        except json.JSONDecodeError:
+            logging.error('problem decoding json! Dumping response and ' + \
+                         'returning empty dict.')
+            logging.error('response status: ' + r.status_code)
+            logging.error('response body: ' + r.text)
+            return {}
 
     @retry(wait_exponential_multiplier=1000, wait_exponential_max=10000)
     def check_if_processing(self, image_id: str):
